@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorPageComponent } from './shared/error-page/error-page.component';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 
 //Creamnos nustra variable para las rutas de nuestro programa
@@ -11,8 +12,10 @@ const routes: Routes = [
     loadChildren: () => import("./auth/auth.module").then(m => m.AuthModule)
   },
   {
-    path:'heroes',
-    loadChildren: () => import("./heroes/heroes.module").then(m => m.HeroesModule) 
+    path: 'heroes',
+    loadChildren: () => import("./heroes/heroes.module").then(m => m.HeroesModule),
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
   },
   {
     //Ruta para cuando se busque una páguina que no exista
